@@ -1,7 +1,7 @@
 import { Router } from "express";
-import { loginController, signUpController } from "../controllers/adminControllers";
-import { getFormController } from "../controllers/formController";
-import { submitResponseController } from "../controllers/responseController";
+import { loginController, signUpController } from "../controllers/adminControllers.js";
+import { getFormController } from "../controllers/formController.js";
+import { submitResponseController } from "../controllers/responseController.js";
 
 
 const router = Router();

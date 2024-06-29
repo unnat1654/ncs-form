@@ -1,9 +1,9 @@
 import adminModel from "../models/adminModel.js";
-import bcrypt, { hash } from "bcrypt";
+import { hash, compare} from "bcrypt";
+import JWT from 'jsonwebtoken';
 
 export const signUpController = async (req, res) => {
   try {
-    const saltRounds = 10;
     const { username, password } = req.body;
     if (!username || !password) {
       res.status(404).send({
@@ -11,21 +11,22 @@ export const signUpController = async (req, res) => {
         message: "username or password missing",
       });
     }
-    const existingUser = await adminModel.findOne({ username });
-    if (existingUser) {
-      res.status(403).send({
+    const saltRounds = 10;
+    const existingUsers = await adminModel.find({}).select({username:1});
+    if (existingUsers.length>10 || existingUsers.some(existingUser => existingUser.username === username)) {
+      res.status(409).send({
         success: false,
-        message: "User Already exists",
+        message: "Maximum admins reached",
       });
     }
 
-    const hashPassword = await bcrypt.hash(password, saltRounds);
+    const hashPassword = await hash(password.trim(), saltRounds);
 
-    const user = new adminModel({ username, password: hashPassword });
+    const user = new adminModel({ username:username.trim(), password: hashPassword });
     await user.save();
     res.status(201).send({
       success: true,
-      message: "User created successfully",
+      message: "user created successfully",
     });
   } catch (error) {
     console.error(error);
@@ -41,34 +42,34 @@ export const loginController = async (req, res) => {
   try {
     const { username, password } = req.body;
     if (!username || !password) {
-      res.status(404).send({
+      return res.status(404).send({
         success: false,
         message: "username or password missing.",
       });
     }
-    const user = await adminModel.findOne({ username });
+    const user = await adminModel.findOne({ username:username.trim() });
     if (!user || user.authorization==false) {
-      res.status(404).send({
+      return res.status(403).send({
         success: false,
         message: "Admin does not exist.",
       });
     }
 
-    const matchPassword = await bcrypt.compare(password,user.password);
+    const matchPassword = await compare(password.trim(),user.password);
     if(!matchPassword){
         res.status(200).send({
             success:false,
             message:"Password does not match."
         });
     }
-    const token = await JWT.sign({_id:user._id},process.env.JWT_SECRET, {
+    const token = JWT.sign({_id:user._id},process.env.JWT_SECRET, {
       expiresIn: "30d",
     });
     res.status(200).send({
         success:true,
         message:"Admin logged in successfully.",
         admin:{
-            username,
+            username:username.trim(),
             token
         }
     })

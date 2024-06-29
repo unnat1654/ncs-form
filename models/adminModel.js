@@ -1,6 +1,6 @@
-import mongoose from "mongoose";
+import {Schema,model} from "mongoose";
 
-const adminSchema = new mongoose.Schema({
+const adminSchema = new Schema({
     username:{
         type:String,
         maxLength:50,
@@ -18,4 +18,4 @@ const adminSchema = new mongoose.Schema({
     }
 });
 
-export default mongoose.model("admins",adminSchema,"admins");
+export default model("admins",adminSchema,"admins");

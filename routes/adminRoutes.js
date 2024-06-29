@@ -3,8 +3,8 @@ import {
   createFormController,
   deleteFormController,
   getAllFormsController,
-} from "../controllers/formController";
-import { getResponsesController } from "../controllers/responseController";
+} from "../controllers/formController.js";
+import { getResponsesController } from "../controllers/responseController.js";
 
 const router = Router();
 

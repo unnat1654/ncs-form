@@ -1,10 +1,11 @@
-import mongoose, { mongo } from "mongoose";
+import {Schema,model } from "mongoose";
 
 
-const formSchema= new mongoose.Schema({
+const formSchema= new Schema({
    name:{
     type:String,
     required:true,
+    unique:true,
     trim:true
    },
    description:{
@@ -16,7 +17,6 @@ const formSchema= new mongoose.Schema({
     ref:"questions"
    },
    responses:[Schema.Types.Mixed],
-
 })
 
-export default mongoose.model("forms",formSchema,"forms");
+export default model("forms",formSchema,"forms");

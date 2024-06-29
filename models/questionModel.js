@@ -1,25 +1,22 @@
-import mongoose from "mongoose";
+import {Schema,model}from "mongoose";
 
 
-const questionSchema = new mongoose.Schema({
+const questionSchema = new Schema({
   _id:{ //overwritng the default _id
     type:String,
-    unique:true,
-    index:1,
-    required:true,
   },
-  Type: {
+  type: {
     type: String,
     enum:['message','text-response','multi-choice'],
     required: true,
   },
-  Description: {
+  description: {
     type: String,
     required: true,
     trim:true,
   },
-  Options: [String],
-  NextQuestion: {
+  options: [String],
+  nextQuestions: {
     type: [String],
     ref:"questions",
     validate: {
@@ -39,12 +36,6 @@ const questionSchema = new mongoose.Schema({
       },
     },
   },
-
-  Required: {
-    type: Boolean,
-    required: true,
-    default:true,
-  },
 });
 
-export default mongoose.model("questions", questionSchema, "questions");
+export default model("questions", questionSchema, "questions");
