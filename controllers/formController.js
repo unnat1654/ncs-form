@@ -73,7 +73,7 @@ export const getFormController = async (req, res) => {
   try {
     const form = await formModel
       .findById(formId)
-      .select({ _id: 1, name: 1, description: 1, questions: 1});
+      .select({ _id: 1, name: 1, description: 1, questions: 1}).populate("questions");
     if (!form) {
       return res.status(404).send({
         success: false,

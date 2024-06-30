@@ -5,6 +5,7 @@ import FormCreator from "./admin/FormCreator";
 import AllFormList from "./admin/AllFormList";
 import Signup from "./admin/Signup";
 import Login from "./admin/Login";
+import ChatBot from "./user/ChatBot";
 
 const App = () => {
   return (
@@ -13,6 +14,8 @@ const App = () => {
       <Route path="/all-forms" element={<AllFormList/>} />
       <Route path="/signup" element={<Signup/>}/>
       <Route path="/login" element={<Login/>}/>
+
+      <Route path="/form/:id" element={<ChatBot/>}/>
     </Routes>
   );
 };
