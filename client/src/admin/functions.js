@@ -46,7 +46,7 @@ export const formatQuestions = (formName, questions) => {
       type: type,
       description: description,
       options: options,//[] or [string]
-      nextQuestions: nextQuestions.map(nextQuestion => `${formName}.${nextQuestion}`)
+      nextQuestions: nextQuestions.map(nextQuestion => nextQuestion ? `${formName}.${nextQuestion}` : "")
     };
   });
 }

@@ -12,7 +12,7 @@ router.post("/login",loginController);
 
 router.get("/get-form/:formId", getFormController);
 
-router.post("/submit-response",submitResponseController);
+router.patch("/submit-response",submitResponseController);
 
 
 export default router;

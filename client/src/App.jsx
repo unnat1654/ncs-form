@@ -6,6 +6,7 @@ import AllFormList from "./admin/AllFormList";
 import Signup from "./admin/Signup";
 import Login from "./admin/Login";
 import ChatBot from "./user/ChatBot";
+import "./App.css";
 
 const App = () => {
   return (
