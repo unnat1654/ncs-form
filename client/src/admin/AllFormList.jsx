@@ -34,7 +34,7 @@ const AllFormList = () => {
   const handleFormDelete = async (e, _id) => {
     try {
       e.preventDefault();
-      const { data } = await axios.delete("/delete-form", { formId: _id });
+      const { data } = await axios.delete(`${import.meta.env.VITE_SERVER}/admin/delete-form`, { formId: _id });
       if(data?.success){
         toast.success(data?.message);
       }
@@ -44,6 +44,14 @@ const AllFormList = () => {
       toast.error(error.response.data.message);
     }
   };
+  const handleFormResponsesDownload=async (e,_id)=>{
+    try {
+      e.preventDefault();
+      await axios.get(`${import.meta.env.VITE_SERVER}/admin/get-responses/${_id}`);  
+    } catch (error) {
+      console.log(error);
+    }
+  }
   return (
     <>
       <ToastContainer />
@@ -65,6 +73,9 @@ const AllFormList = () => {
               <p>{description}</p>
               <button onClick={(e) => handleFormDelete(e, _id)}>
                 Delete Form
+              </button>
+              <button onClick={(e) => handleFormResponsesDownload(e,_id)}>
+                Download Responses
               </button>
             </div>
             <br />

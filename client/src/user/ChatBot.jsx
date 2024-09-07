@@ -62,13 +62,14 @@ const ChatBot = () => {
     fetchForm();
   }, []);
 
-  const moveToNextQuestion = async () => {
+  const moveToNextQuestion = () => {
     if (!prompt) return;
     addMessage(prompt, false);
     setPrompt("");
     setQa((prev) => {
       const newQa = { ...prev };
       newQa[currentQuestion.description] = prompt;
+    
       if (!nextQuestionId) 
         submitResponse(newQa);
 

@@ -7,7 +7,7 @@ export const submitResponseController = async (req, res) => {
             return res.status(404).send({
                 success: false,
                 message: "Form id missing",
-            })
+            });
         }
         const form = await formModel.findByIdAndUpdate(formId, { $push: { responses: userResponse } }, { new: true });
         if (!form) {
@@ -25,7 +25,7 @@ export const submitResponseController = async (req, res) => {
         res.status(500).send({
             success: false,
             message: "Error while submitting form",
-        })
+        });
     }
 };
 
@@ -37,11 +37,14 @@ export const getResponsesController = async (req, res) => {
             return res.status(404).send({
                 success: false,
                 message: "Form Responses not found",
-            })
-
+            });
         }
         res.xls(`Responses_${formId}.xlsx`, formResponses.responses);
     } catch (error) {
         console.error(error);
+        res.status(500).send({
+            success: false,
+            message: "Error while Fetching repsonses",
+        })
     }
 }
