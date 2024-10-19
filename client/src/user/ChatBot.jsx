@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
+import { useAuth } from "../authContext";
 
 const useStateWithCallback = (initialState) => {
   const [state, setState] = useState(initialState);
@@ -24,6 +25,7 @@ const useStateWithCallback = (initialState) => {
 
 const ChatBot = () => {
   const { id } = useParams();
+  const [auth,setAuth] = useAuth();
   const [formData, setFormData] = useState({});
   //formData:{_id:String,name:string,description:string,questions:[{_id:string,type:string,description:string,options:[String],nextQuestions:[String]}]}
   const [currentQuestion, setCurrentQuestion] = useState({});
@@ -59,8 +61,9 @@ const ChatBot = () => {
     }
   };
   useEffect(() => {
+    if(!auth?.token) return;
     fetchForm();
-  }, []);
+  }, [auth?.token]);
 
   const moveToNextQuestion = () => {
     if (!prompt) return;

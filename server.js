@@ -9,6 +9,8 @@ import { isAuthorized, isLoggedIn } from "./middlewares/authMiddleware.js";
 import connectDB from "./config/dbConfig.js";
 import path from "path";
 import { fileURLToPath } from "url";
+import json2xls from "json2xls";
+
 
 dotenv.config();
 
@@ -24,11 +26,11 @@ app.use(morgan("dev"));
 app.use(express.json());
 app.use(express.static(path.join(__dirname, "./dist")));
 app.use(express.urlencoded({ extended: true }));
-
+app.use(json2xls.middleware);
 connectDB();
 
 //routes
-app.use("/api/admin", isLoggedIn, isAuthorized, adminRoutes);
+app.use("/api/admin",adminRoutes);
 app.use("/api/user", userRoutes);
 
 

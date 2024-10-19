@@ -16,7 +16,10 @@ const formSchema= new Schema({
     type:[String],
     ref:"questions"
    },
-   responses:[Schema.Types.Mixed],
-})
+   responses:{
+      type:[Schema.Types.Mixed], 
+      default:[]
+   },
+});
 
 export default model("forms",formSchema,"forms");

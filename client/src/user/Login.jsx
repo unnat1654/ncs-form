@@ -5,7 +5,7 @@ import { toast, ToastContainer } from "react-toastify";
 import { useAuth } from "../authContext";
 
 const Login = () => {
-  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [auth, setAuth] = useAuth({});
   const navigate = useNavigate();
@@ -15,18 +15,18 @@ const Login = () => {
     try {
       const { data } = await axios.post(
         `${import.meta.env.VITE_SERVER}/user/login`,
-        { username, password }
+        { email, password }
       );
       if (data?.success) {
         setAuth({
-          username: data.admin.username,
-          token: data.admin.token,
+          username: data.role?"admin":"user",
+          token: data.token,
         });
         localStorage.setItem(
           "form-auth",
           JSON.stringify({
-            username: data.admin.username,
-            token: data.admin.token,
+            username: data.role?"admin":"user",
+            token: data.token,
           })
         );
         toast.success(data.message);
@@ -42,9 +42,9 @@ const Login = () => {
       <ToastContainer />
       <form className="login-form" onSubmit={handleSubmit}>
         <input
-          value={username}
-          onInput={(e) => setUsername(e.target.value)}
-          type="text"
+          value={email}
+          onInput={(e) => setEmail(e.target.value)}
+          type="email"
           className="login-input"
           placeholder="Enter Email"
           required

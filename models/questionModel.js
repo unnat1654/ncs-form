@@ -15,6 +15,9 @@ const questionSchema = new Schema({
     required: true,
     trim:true,
   },
+  key:{
+    type:String,
+  },
   options: [String],
   nextQuestions: {
     type: [String],

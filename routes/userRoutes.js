@@ -1,18 +1,17 @@
 import { Router } from "express";
-import { loginController, signUpController } from "../controllers/adminControllers.js";
+import { loginController } from "../controllers/authControllers.js";
 import { getFormController } from "../controllers/formController.js";
 import { submitResponseController } from "../controllers/responseController.js";
+import { isLoggedIn } from "../middlewares/authMiddleware.js";
 
 
 const router = Router();
 
-router.post("/signup",signUpController);
+router.post("/login", loginController);
 
-router.post("/login",loginController);
+router.get("/get-form/:formId", isLoggedIn, getFormController);
 
-router.get("/get-form/:formId", getFormController);
-
-router.patch("/submit-response",submitResponseController);
+router.patch("/submit-response", isLoggedIn, submitResponseController);
 
 
 export default router;

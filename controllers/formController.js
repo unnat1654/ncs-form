@@ -29,7 +29,6 @@ export const createFormController = async (req, res) => {
       name,
       description,
       questions: questionIds,
-      responses: [], // how?
     });
 
     res.status(201).json({
@@ -69,8 +68,9 @@ export const getAllFormsController = async (req, res) => {
 };
 
 export const getFormController = async (req, res) => {
-  const { formId } = req.params;
   try {
+    const { formId } = req.params;
+    
     const form = await formModel
       .findById(formId)
       .select({ _id: 1, name: 1, description: 1, questions: 1}).populate("questions");

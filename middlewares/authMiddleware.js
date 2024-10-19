@@ -1,5 +1,7 @@
 import JWT from "jsonwebtoken";
-import adminModel from "../models/adminModel.js"
+
+
+
 export const isLoggedIn = (req, res, next) => {
   try {
     const decodedToken = JWT.decode(req.headers.authorization, {
@@ -24,29 +26,25 @@ export const isLoggedIn = (req, res, next) => {
     console.error(error);
     res.status(500).send({
       success: false,
-      error,
-      authToken: req.headers.authorization,
+      message:"Error while checking authentication!"
     });
   }
 };
 export const isAuthorized = async (req, res, next) => {
   try {
-    const user = await adminModel.findById(req.user._id);
-    if (!user || user.authorization == false) {
+    const { _id, role } = JWT.verify(req.headers.authorization, process.env.JWT_SECRET);
+    if (role != 1)
       return res.status(401).send({
         success: false,
-        message: "Not authorized to perform this operation",
-        user_access: user.authorization,
+        message: "Unauthorized!"
       });
-    }
-    console.log("passed middlewares")
+
     next();
   } catch (error) {
     console.error(error);
     res.status(500).send({
-      success:false,
-      message:"Error while authorizating user",
-      error
+      success: false,
+      message: "Error while authorizating user!",
     });
   }
 };

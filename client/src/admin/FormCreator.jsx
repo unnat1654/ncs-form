@@ -8,16 +8,7 @@ const FormCreator = () => {
   const [formName, setFormName] = useState("");
   const [formDescription, setFormDescription] = useState("");
   const [questions, setQuestions] = useState([]);
-  //questions=>[
-  //   {
-  //     uniqueQuestionNumber:Number,
-  //     type:String,
-  //     description:String,
-  //     options:[String],
-  //     nextQuestions:[Number],
-  //     generalNextQuestion:Number
-  //   }
-  //]
+
 
   useEffect(() => {
     if (localStorage.getItem("form-data")) {

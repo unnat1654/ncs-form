@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "../authContext";
 
 const AllFormList = () => {
-  const[allforms, setAllForms] = useState([]);
+  const [allforms, setAllForms] = useState([]);
   const navigate = useNavigate();
   const [auth,setAuth]=useAuth();
 
@@ -23,7 +23,7 @@ const AllFormList = () => {
   };
   useEffect(() => {
     if(!auth?.token) return;
-    getForms();
+      getForms();
   }, [auth?.token]);
 
   const handleNewFormClick = useCallback((e) => {
@@ -47,7 +47,7 @@ const AllFormList = () => {
   const handleFormResponsesDownload=async (e,_id)=>{
     try {
       e.preventDefault();
-      await axios.get(`${import.meta.env.VITE_SERVER}/admin/get-responses/${_id}`);  
+      window.open(`${import.meta.env.VITE_SERVER}/admin/get-responses/${_id}`, '_blank'); 
     } catch (error) {
       console.log(error);
     }
@@ -71,9 +71,11 @@ const AllFormList = () => {
               <hr/>
               <h3>{name}</h3>
               <p>{description}</p>
+
               <button onClick={(e) => handleFormDelete(e, _id)}>
                 Delete Form
               </button>
+              <button>Edit Form</button>
               <button onClick={(e) => handleFormResponsesDownload(e,_id)}>
                 Download Responses
               </button>
