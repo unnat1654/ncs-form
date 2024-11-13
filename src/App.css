@@ -1,0 +1,12 @@
+@font-face {
+    font-family: 'CustomFont';
+    src: url('../assets/Avenir LT Std 35 Light.otf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+body {
+    font-family: 'CustomFont', sans-serif;
+    margin: 0;
+    padding: 0;
+}

@@ -1,0 +1,159 @@
+.robot-logo {
+    width: 159px;
+    height: auto;
+    margin: 0 auto 20px;
+    display: block;
+}
+
+.login-container,.signup-container {
+    display: flex;
+    height: 78vh;
+    justify-content: space-between;
+    padding: 50px;
+    max-width: 100vw;
+    overflow-x: hidden;
+}
+
+.signup-left,
+.login-left,
+.login-right,
+.signup-right {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 0 50px;
+    align-items: center;
+    
+}
+
+.login-left h1, .signup-left h1,.login-left p,.signup-left p{
+    align-content: center;
+    text-align: center;
+}
+
+.login-image {
+    margin-bottom: 20px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.login-form,
+.signup-form {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 400px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.login-input,
+.signup-input {
+    margin-bottom: 20px;
+    padding: 12px;
+    font-size: 16px;
+    border: 0px solid #ced4da;
+    background-color: #b2ebf280;
+    border-radius: 8px;
+    outline: none;
+    transition: all 0.3s ease;
+    color: #067165;
+}
+
+.signup-input:disabled{
+    background-color: #cbcbcb80;
+    color: #505050;
+}
+
+.login-input:focus,
+.signup-input:focus {
+    border: 1px solid #067165;
+}
+
+.login-button,
+.sendotp-button,
+.signup-button {
+    padding: 12px;
+    font-size: 18px;
+    background-color: #009688;
+    border: none;
+    border-radius: 8px;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.login-button:disabled,
+.sendotp-button:disabled,
+.signup-button:disabled {
+    background-color: #929292;
+}
+
+.otp-form{
+    width: 100%;
+    max-width: 400px;
+    margin-top: 40px;
+    display: flex;
+    flex-direction: column;
+}
+
+.info-button,
+.info-button-outline {
+    padding: 12px 20px;
+    font-size: 18px;
+    cursor: pointer;
+    margin-top: 20px;
+    transition: background-color 0.3s ease;
+}
+
+.info-button {
+    background-color: #009688;
+    color: white;
+    border: none;
+    border-radius: 8px;
+}
+
+.info-button-outline {
+    background-color: transparent;
+    border: 2px solid #009688;
+    color: #009688;
+    border-radius: 8px;
+}
+
+.info-button-outline:hover {
+    background-color: #009688;
+    color: white;
+}
+
+.toggle-link {
+    margin-bottom: 10px;
+    color: #009688;
+    cursor: pointer;
+    font-size: 16px;
+    text-decoration:none
+}
+
+.toggle-link:hover {
+    color: #00796b;
+}
+
+@media (max-width: 768px) {
+    .login-container,.signup-container {
+        flex-direction: column;
+        padding: 20px;
+        gap:50px;
+    }
+
+    .login-left,
+    .login-right,
+    .signup-right {
+        padding: 0;
+        margin: 0;
+        flex: none;
+    }
+
+    .robot-logo {
+        width: 80px;
+    }
+}
