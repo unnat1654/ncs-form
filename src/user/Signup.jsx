@@ -16,7 +16,7 @@ const Signup = () => {
   const [user_id, setUser_id] = useState("");
   const [auth, setAuth] = useAuth({});
   const location = useLocation();
-  const redirectPath = (new URLSearchParams(location.hash.split("?")[1])).get("redirect");
+  const redirectPath = new URLSearchParams(location.search.split("?")[1]).get("redirect");
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -98,6 +98,7 @@ const Signup = () => {
         );
         toast.success(data.message);
         if (redirectPath) navigate(redirectPath);
+        else if(data.role) navigate("/all-forms");
       }
     } catch (error) {
       console.log(error);

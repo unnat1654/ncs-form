@@ -1,9 +1,8 @@
 import React, { useCallback, useEffect, useState } from "react";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "../authContext";
-import {  FaTrashAlt } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
 import { BiSolidArrowToBottom, BiSolidPencil } from "react-icons/bi";
 import robot from "../assets/robot.svg";
@@ -12,6 +11,7 @@ import "./AllFormList.css";
 const AllFormList = () => {
   const [allforms, setAllForms] = useState([]);
   const navigate = useNavigate();
+  const location = useLocation();
   const [auth, setAuth] = useAuth();
 
   const getForms = async () => {
@@ -29,8 +29,8 @@ const AllFormList = () => {
     }
   };
   useEffect(() => {
-    if (JSON.parse(localStorage.getItem("form-auth")).username != "admin")
-      return navigate("/login");
+    if ((JSON.parse(localStorage.getItem("form-auth"))??{})?.username != "admin")
+      navigate(`/login?redirect=${location.pathname}`);
     if(!auth?.token) return;
     getForms();
   }, [auth?.token]);

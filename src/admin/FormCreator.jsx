@@ -7,7 +7,7 @@ import {
   validateAllNextQuestions,
 } from "./functions";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 
 
@@ -17,10 +17,11 @@ const FormCreator = () => {
   const [formDescription, setFormDescription] = useState("");
   const [questions, setQuestions] = useState([]);
   const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
-    if (JSON.parse(localStorage.getItem("form-auth")).username != "admin")
-      return navigate("/login");
+    if ((JSON.parse(localStorage.getItem("form-auth"))??{})?.username != "admin")
+      return navigate(`/login?redirect=${location.pathname}`);
     setQuestions(JSON.parse(localStorage.getItem("form-data") ?? []));
   }, []);
 
@@ -105,7 +106,6 @@ const FormCreator = () => {
             onChange={(e) => setEvent_id(e.target.value)}
           />
         </div>
-        {JSON.stringify(questions)}
 
         {/* Questions List */}
         {questions.map((question, index) => (

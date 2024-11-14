@@ -70,7 +70,7 @@ const ChatBot = () => {
   };
   useEffect(() => {
     if (!localStorage.getItem("form-auth"))
-      navigate(`/login?redirect=${location.hash.replace("#", "")}`);
+      navigate(`/login?redirect=${location.pathname}`);
     if (!auth?.token) return;
     fetchForm();
   }, [auth?.token]);
@@ -91,7 +91,6 @@ const ChatBot = () => {
       addMessage(newCurrQues.description, true);
 
       while (newCurrQues.type === "message") {
-        console.log(newCurrQues);
         if (!newCurrQues.nextQuestions[0]) {
           submitResponse(newQa);
           setNextQuestionId("");

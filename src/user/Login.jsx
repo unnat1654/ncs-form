@@ -11,7 +11,7 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [auth, setAuth] = useAuth({});
   const location = useLocation();
-  const redirectPath = new URLSearchParams(location.hash.split("?")[1]).get("redirect");
+  const redirectPath = new URLSearchParams(location.search.split("?")[1]).get("redirect");
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -37,7 +37,7 @@ const Login = () => {
         );
         toast.success(data.message);
         if (redirectPath) navigate(redirectPath);
-        if(data.role) navigate("/all-forms");
+        else if(data.role) navigate("/all-forms");
       }
     } catch (error) {
       console.log(error);
@@ -57,11 +57,6 @@ const Login = () => {
             conversational chatbot which makes filling forms easy & fun. Also,
             you can use the in-built form builder to create personalized forms.
           </p>
-          {/* <h3>How would you like to proceed?</h3>
-          <button className="info-button" onClick={() => setShowSignup(true)}>
-            Registration
-          </button>
-          <button className="info-button-outline">What is NCS?</button> */}
         </div>
 
         <div className="login-right">
