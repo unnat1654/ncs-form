@@ -5,6 +5,11 @@
     <link rel="icon" type="image/svg+xml" href="/assets/chat_robot-Bb_rNhYz.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Emily</title>
+    <script>
+      if (!location.pathname.includes('.')) {
+        history.replaceState(null, '', '/index.html');
+      }
+    </script>
     <script type="module" crossorigin src="/assets/index-wRyh6Uls.js"></script>
     <link rel="stylesheet" crossorigin href="/assets/index-9GxX9a45.css">
   </head>
