@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import { useAuth } from "../authContext";
 import Navbar from "../component/Navbar";
@@ -10,7 +10,8 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [auth, setAuth] = useAuth({});
-  const redirectPath = new URLSearchParams(location.search).get("redirect");
+  const location = useLocation();
+  const redirectPath = (new URLSearchParams(location.hash.split("?")[1])).get("redirect");
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {

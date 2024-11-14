@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "../authContext";
 import { toast, ToastContainer } from "react-toastify";
 import axios from "axios";
@@ -15,7 +15,8 @@ const Signup = () => {
   const [otp, setOtp] = useState("");
   const [user_id, setUser_id] = useState("");
   const [auth, setAuth] = useAuth({});
-  const redirectPath = new URLSearchParams(location.search).get("redirect");
+  const location = useLocation();
+  const redirectPath = (new URLSearchParams(location.hash.split("?")[1])).get("redirect");
   const navigate = useNavigate();
 
   useEffect(() => {
