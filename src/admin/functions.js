@@ -22,7 +22,6 @@ export const validateAllNextQuestions = (questions, questionNumbers) => {
     throw new Error("Contains no ending for form");
   }
   const uniqueNextQuesArray = Array.from(uniqueNextQuestions);
-  console.log(questionNumbers)
   if (uniqueNextQuesArray.some(NextQues => (!questionNumbers.includes(`${NextQues}`) && NextQues!=""))) {
     throw new Error("Next Questions contains unknown question numbers")
   }

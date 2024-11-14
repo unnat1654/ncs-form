@@ -1,6 +1,6 @@
 @font-face {
     font-family: 'CustomFont';
-    src: url('../assets/Avenir LT Std 35 Light.otf') format('opentype');
+    src: url("./styles/AvenirLTStd35Light.otf") format('opentype');
     font-weight: normal;
     font-style: normal;
 }
