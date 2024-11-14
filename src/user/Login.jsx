@@ -11,7 +11,7 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [auth, setAuth] = useAuth({});
   const location = useLocation();
-  const redirectPath = (new URLSearchParams(location.hash.split("?")[1])).get("redirect");
+  const redirectPath = new URLSearchParams(location.hash.split("?")[1]).get("redirect");
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
