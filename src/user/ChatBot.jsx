@@ -70,7 +70,7 @@ const ChatBot = () => {
   };
   useEffect(() => {
     if (!localStorage.getItem("form-auth"))
-      navigate(`/login?redirect=${location.pathname}`);
+      navigate(`/login?redirect=${location.hash.replace("#", "")}`);
     if (!auth?.token) return;
     fetchForm();
   }, [auth?.token]);
