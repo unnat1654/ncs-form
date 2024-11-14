@@ -18,6 +18,7 @@ const App = () => {
       <Route path="/signup" element={<Signup />} />
       <Route path="/login" element={<Login />} />
       <Route path="/form/:id" element={<ChatBot />} />
+      <Route path="*" element={<Signup />} />
     </Routes>
   );
 };
