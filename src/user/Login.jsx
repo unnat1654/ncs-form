@@ -35,7 +35,8 @@ const Login = () => {
           })
         );
         toast.success(data.message);
-        navigate("/all-forms");
+        if (redirectPath) navigate(redirectPath);
+        if(data.role) navigate("/all-forms");
       }
     } catch (error) {
       console.log(error);
