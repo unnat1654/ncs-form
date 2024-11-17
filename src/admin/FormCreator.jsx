@@ -22,7 +22,8 @@ const FormCreator = () => {
   useEffect(() => {
     if ((JSON.parse(localStorage.getItem("form-auth"))??{})?.username != "admin")
       return navigate(`/login?redirect=${location.pathname}`);
-    setQuestions(JSON.parse(localStorage.getItem("form-data") ?? []));
+    if(localStorage.getItem("form-data"))
+      setQuestions(JSON.parse(localStorage.getItem("form-data")));
   }, []);
 
   const addQuestion = () => {
