@@ -49,8 +49,7 @@
 }
 
 .bot-avatar {
-    width: 100px;
-    margin-bottom: 20px;
+    margin: 0 auto 20px auto;
 }
 
 h2 {
@@ -85,7 +84,20 @@ h2 {
     word-wrap: break-word;
     border-radius: 10px;
     display: inline-block;
+}
 
+@keyframes fadeInWord {
+    to {
+      opacity: 1;
+      transform: translateX(0); /* Move to the original position */
+    }
+  }
+
+.message.question .word {
+    opacity: 0;
+    transform: translateX(-3px);
+    display: inline-block;
+    animation: fadeInWord 0.25s ease-in-out forwards;
 }
 
 .question {
@@ -114,8 +126,9 @@ h2 {
     margin-right: auto;
     margin-left: auto;
 }
-.input-box *{
-    background-color: #ecfdff!important;
+
+.input-box * {
+    background-color: #ecfdff !important;
 }
 
 .prompt {
@@ -132,7 +145,8 @@ h2 {
     flex-grow: 1;
     outline: none;
 }
-.prompt:focus{
+
+.prompt:focus {
     border: 0px solid #ccc;
     outline: none;
 
@@ -162,14 +176,14 @@ h2 {
     width: 24px;
     height: 24px;
     margin-right: 8px;
-    margin-top:auto;
+    margin-top: auto;
 }
 
-.inline-user-avatar{
+.inline-user-avatar {
     width: 30px;
     height: 30px;
     margin-top: -10px;
-    margin-bottom:auto;
+    margin-bottom: auto;
     margin-right: 60px;
     margin-left: 8px;
 }
@@ -197,7 +211,7 @@ h2 {
     width: 100%;
     display: flex;
     flex-direction: column;
-    margin: 20px ;
+    margin: 20px;
 }
 
 .option {
@@ -245,20 +259,24 @@ h2 {
     .display {
         overflow: hidden;
     }
+
     .message {
         max-width: 96%;
     }
-    .inline-user-avatar{
+
+    .inline-user-avatar {
         margin-right: 0px;
     }
+
     .input-box {
         padding: 0 10px;
-        margin-bottom:35px;
+        margin-bottom: 35px;
     }
 
     .prompt {
         width: 80%;
     }
+
     .arrow {
         font-size: 18px;
         margin: 0 5px 0 auto;
@@ -290,12 +308,11 @@ h2 {
         width: 100%;
         text-align: center;
         padding: 20px 0;
+
     }
 
     .bot-avatar {
         margin: 0 auto;
-        width: 150px;
-        /* Larger on mobile */
     }
 
     .chat-box {

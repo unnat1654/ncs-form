@@ -4,7 +4,8 @@ import { useAuth } from "../authContext";
 import { toast, ToastContainer } from "react-toastify";
 import axios from "axios";
 import Navbar from "../component/Navbar";
-import robot from "../assets/robot.svg";
+import Lottie from "lottie-react";
+import robotAnimation from "../assets/robot-amation.json";
 
 const Signup = () => {
   const [resendTimer, setResendTimer] = useState(0);
@@ -111,7 +112,7 @@ const Signup = () => {
       <Navbar />
       <div className="signup-container">
         <div className="signup-left">
-          <img src={robot} alt="Robot Logo" className="robot-logo" />
+          <Lottie animationData={robotAnimation} loop={true}  className="robot-logo"/>
           <h1>Sign up to Emily</h1>
           <p>Emily, your Personal NCS Guide presents herself!</p>
           <p>

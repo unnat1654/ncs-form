@@ -59,10 +59,15 @@ const AllFormList = () => {
   const handleFormResponsesDownload = async (e, _id) => {
     try {
       e.preventDefault();
-      window.open(
-        `${import.meta.env.VITE_SERVER}/emily/get-responses/${_id}`,
-        "_blank"
-      );
+      const response = await axios.get(`${import.meta.env.VITE_SERVER}/emily/get-responses/${_id}`,{responseType:"blob"});
+
+    const url = window.URL.createObjectURL(new Blob([response.data]));
+    const link = document.createElement('a');
+    link.href = url;
+    link.setAttribute('download', `Responses_${_id}.xlsx`); // Use a suitable filename
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
     } catch (error) {
       console.log(error);
     }

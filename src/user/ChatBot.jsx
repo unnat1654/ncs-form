@@ -4,10 +4,11 @@ import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import { useAuth } from "../authContext";
 import Navbar from "../component/Navbar";
-import robot from "../assets/robot.svg";
+import Lottie from "lottie-react";
+import robotAnimation from "../assets/robot-chat.json";
 import robot2 from "../assets/chat_robot.svg";
 import userIcon from "../assets/user_icon.svg";
- import { IoSend } from "react-icons/io5";
+import { IoSend } from "react-icons/io5";
 import "./ChatBot.css";
 
 const useStateWithCallback = (initialState) => {
@@ -33,8 +34,10 @@ const ChatBot = () => {
   const { id } = useParams();
   const [auth, setAuth] = useAuth();
   const [formData, setFormData] = useState({});
+  const inputRef = useRef(null);
   //formData:{_id:String,name:string,description:string,questions:[{_id:string,type:string,description:string,options:[String],nextQuestions:[String]}]}
   const [currentQuestion, setCurrentQuestion] = useState({});
+  const [showOptions, setShowOptions] = useState(false);
   const [nextQuestionId, setNextQuestionId] = useState("");
   const [messages, setMessages] = useState([]);
   const [prompt, setPrompt] = useState("");
@@ -73,6 +76,8 @@ const ChatBot = () => {
       navigate(`/login?redirect=${location.pathname}`);
     if (!auth?.token) return;
     fetchForm();
+    const img = new Image();
+    img.src = userIcon;
   }, [auth?.token]);
 
   const moveToNextQuestion = () => {
@@ -83,23 +88,28 @@ const ChatBot = () => {
       const newQa = { ...prev };
       newQa[currentQuestion.description] = prompt;
 
-      if (!nextQuestionId) submitResponse(newQa);
+      if (!nextQuestionId) {
+        submitResponse(newQa);
+        return;
+      }
 
       let newCurrQues = formData.questions.find(
         (question) => question._id === nextQuestionId
       );
-      addMessage(newCurrQues.description, true);
+      setTimeout(() => {
+        addMessage(newCurrQues.description, true);
+      }, 1000);
 
       while (newCurrQues.type === "message") {
         if (!newCurrQues.nextQuestions[0]) {
           submitResponse(newQa);
           setNextQuestionId("");
+          setCurrentQuestion({});
           return;
         }
         newCurrQues = formData.questions.find(
           (question) => question._id === newCurrQues.nextQuestions[0]
         );
-        addMessage(newCurrQues.description, true);
       }
 
       if (newCurrQues.type !== "multi-choice") {
@@ -110,6 +120,14 @@ const ChatBot = () => {
       return newQa;
     });
   };
+
+  useEffect(() => {
+    if (currentQuestion.type === "multi-choice")
+      setTimeout(() => {
+        setShowOptions(true);
+      }, 3000);
+    else setShowOptions(false);
+  }, [currentQuestion]);
 
   //add messages to chat(both questions and answers) using this function
   const addMessage = (message, isQuestion) => {
@@ -147,68 +165,94 @@ const ChatBot = () => {
       <Navbar />
       <div className="chat-container">
         <div className="bot-intro">
-          <img src={robot} alt="Bot Avatar" className="bot-avatar" />
+          <Lottie
+            animationData={robotAnimation}
+            loop={true}
+            style={{ width: "50%", height: "50%" }}
+            className="bot-avatar"
+          />
           <h2>{formData.name}</h2>
           <p>Emily presents to you,</p>
           <p>{formData.description}</p>
         </div>
+        <div className="chat-box">
+          <div className="display">
+            {messages.map(({ message, isQuestion }, index) => (
+              <div key={index} className="message-wrapper">
+                {isQuestion && (
+                  <img
+                    src={robot2}
+                    alt="Bot Avatar"
+                    className="inline-bot-avatar"
+                  />
+                )}
+                <span className={`message${isQuestion ? " question" : ""}`}>
+                  {isQuestion
+                    ? message.split(" ").map((word, index) => (
+                        <span
+                          key={index}
+                          className="word"
+                          style={{ animationDelay: `${index * 0.2}s` }}
+                        >
+                          {word}&nbsp;
+                        </span>
+                      ))
+                    : message}
+                </span>
 
-      <div className="chat-box">
-        <div className="display">
-          {messages.map(({ message, isQuestion }, index) => (
-            <div key={index} className="message-wrapper">
-              {isQuestion && (
-                <img
-                  src={robot2}
-                  alt="Bot Avatar"
-                  className="inline-bot-avatar"
-                />
-              )}
-              <span className={`message${isQuestion ? " question" : ""}`}>
-                {message}
-              </span>
-              {!isQuestion && (
-                <img
-                  src={userIcon}
-                  alt="user-icon"
-                  className="inline-user-avatar"
-                />
-              )}
-            </div>
-          ))}
-          <ul className="options">
-            {currentQuestion.type === "multi-choice" &&
-              currentQuestion.options.map((option, index) => (
-                <li
-                  className="option"
-                  key={`${currentQuestion._id}.${index}`}
-                  onClick={() => {
-                    setNextQuestionId(currentQuestion.nextQuestions[index]);
-                    setPrompt(option);
-                  }}
-                >
-                  {option}
-                </li>
-              ))}
-          </ul>
-        </div>
+                {!isQuestion && (
+                  <img
+                    src={userIcon}
+                    alt="user-icon"
+                    className="inline-user-avatar"
+                  />
+                )}
+              </div>
+            ))}
+            <ul className="options">
+              {currentQuestion?.type === "multi-choice" &&
+                showOptions &&
+                currentQuestion.options.map((option, index) => (
+                  <li
+                    className="option"
+                    key={`${currentQuestion._id}.${index}`}
+                    onClick={() => {
+                      setNextQuestionId(currentQuestion.nextQuestions[index]);
+                      setPrompt(option);
+                    }}
+                  >
+                    {option}
+                  </li>
+                ))}
+            </ul>
+          </div>
 
-        <div className="input-box">
-          <input
-            placeholder="type your message"
-            value={prompt}
-            onChange={(e) => setPrompt(e.target.value)}
-            type="text"
-            className="prompt"
-            onKeyDown={handleKeyDown}
-            disabled={currentQuestion.type === "multi-choice"}
-          />
-          <button onClick={moveToNextQuestion} className="send-btn">
-            <IoSend className="arrow" />
-          </button>
+          <div
+            onClick={(e) => {
+              if (e.target.tagName !== "BUTTON") {
+                inputRef.current.focus();
+              }
+            }}
+            className="input-box"
+          >
+            <input
+              placeholder="type your message"
+              value={prompt}
+              ref={inputRef}
+              onChange={(e) => setPrompt(e.target.value)}
+              type="text"
+              className="prompt"
+              onKeyDown={handleKeyDown}
+              disabled={
+                !currentQuestion.type || currentQuestion.type === "multi-choice"
+              }
+            />
+            <button onClick={moveToNextQuestion} className="send-btn">
+              <IoSend className="arrow" />
+            </button>
+          </div>
         </div>
       </div>
-    </div>
     </div>
   );
 };

@@ -4,7 +4,8 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import { useAuth } from "../authContext";
 import Navbar from "../component/Navbar";
-import robot from "../assets/robot.svg";
+import Lottie from "lottie-react";
+import robotAnimation from "../assets/robot-amation.json";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -49,7 +50,7 @@ const Login = () => {
       <Navbar />
       <div className="login-container">
         <div className="login-left">
-          <img src={robot} alt="Robot Logo" className="robot-logo" />
+          <Lottie animationData={robotAnimation} loop={true}  className="robot-logo"/>
           <h1>Welcome back!</h1>
           <p>Emily, your Personal NCS Guide presents herself!</p>
           <p>
