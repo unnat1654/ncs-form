@@ -258,6 +258,7 @@ h2 {
 
     .display {
         overflow: hidden;
+        max-height: 95%;
     }
 
     .message {
