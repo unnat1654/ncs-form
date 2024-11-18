@@ -25,8 +25,20 @@ const Question = ({ index, question, setQuestions, deleteQuestion }) => {
   const updateNextQuestionSingle = (index, number) => {
     setNextQuestions((prev) => {
       const newNext = [...prev];
-      newNext[index] = +number || 0;
+      newNext[index] = +number || null;
       return newNext;
+    });
+  };
+  const deleteOption = (optionIndex) => {
+    setOptions((prev)=>{
+      const newOptions = [...prev];
+      newOptions.splice(optionIndex,1);
+      return newOptions;
+    });
+    setNextQuestions((prev)=>{
+      const newOptions = [...prev];
+      newOptions.splice(optionIndex,1);
+      return newOptions;
     });
   };
 
@@ -141,6 +153,7 @@ const Question = ({ index, question, setQuestions, deleteQuestion }) => {
                 onBeforeInput={handleBeforeInput}
                 required
               />
+              <button onClick={()=>deleteOption(optionIndex)}>DeleteOption</button>
             </div>
           ))}
           <button onClick={addOption}>Add Option</button>
