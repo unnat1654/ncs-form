@@ -120,6 +120,7 @@ const Question = ({ index, question, setQuestions, deleteQuestion }) => {
         <option value="message">Message</option>
         <option value="text-response">Text Response</option>
         <option value="multi-choice">Multi Choice</option>
+        <option value="file">File</option>
       </select>
       <input
         type="number"

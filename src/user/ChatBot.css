@@ -112,6 +112,7 @@ h2 {
     margin-left: auto;
     text-align: right;
     border-radius: 15px 0 15px 15px;
+    max-width: 50%;
 }
 
 /* Input box and send button */
@@ -144,6 +145,17 @@ h2 {
     margin-right: 20px;
     flex-grow: 1;
     outline: none;
+}
+
+.file-prompt {
+    width: 100%;
+    max-width: 697px;
+    padding: 3px;
+    margin: 0.5rem 20px;
+    font-size: 1rem;
+    color: #585858;
+    margin-right: 20px;
+    flex-grow: 1;
 }
 
 .prompt:focus {
@@ -262,7 +274,7 @@ h2 {
     }
 
     .message {
-        max-width: 96%;
+        max-width: 70%;
     }
 
     .inline-user-avatar {

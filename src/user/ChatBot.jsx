@@ -41,6 +41,8 @@ const ChatBot = () => {
   const [nextQuestionId, setNextQuestionId] = useState("");
   const [messages, setMessages] = useState([]);
   const [prompt, setPrompt] = useState("");
+  const [doc, setDoc] = useState("");
+  const [fileName, setFileName] = useState("");
   const [qa, setQa] = useStateWithCallback({});
   const navigate = useNavigate();
   const location = useLocation();
@@ -80,19 +82,51 @@ const ChatBot = () => {
     img.src = userIcon;
   }, [auth?.token]);
 
+  const handleDoc = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      console.log(file);
+      if (file.size > 2000000) {
+        e.preventDefault();
+        toast.error("Image size too large");
+        return;
+      }
+      setFileName(file.name);
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onloadend = () => {
+        setDoc(reader.result);
+      };
+    }
+  };
+
   const moveToNextQuestion = () => {
-    if (!prompt) return;
-    addMessage(prompt, false);
+    if (
+      (!prompt && !doc) ||
+      (prompt && doc) ||
+      prompt.startsWith("SZwgRYmUydiqLph6J7A6Adbck0fis3fy") ||
+      (currentQuestion.type == "multi-choice" &&
+        !currentQuestion.options.includes(prompt))
+    )
+      return;
+
+    if (prompt) addMessage(prompt, false);
+    if (doc) addMessage(`📁${fileName}`, false);
     setPrompt("");
+    setDoc("");
+    setFileName("");
     setQa((prev) => {
       const newQa = { ...prev };
-      newQa[currentQuestion.description] = prompt;
+      if (doc)
+        newQa[
+          currentQuestion.description
+        ] = `SZwgRYmUydiqLph6J7A6Adbck0fis3fy${doc}`;
+      else newQa[currentQuestion.description] = prompt;
 
       if (!nextQuestionId) {
         submitResponse(newQa);
         return;
       }
-
       let newCurrQues = formData.questions.find(
         (question) => question._id === nextQuestionId
       );
@@ -230,23 +264,41 @@ const ChatBot = () => {
           <div
             onClick={(e) => {
               if (e.target.tagName !== "BUTTON") {
-                inputRef.current.focus();
+                inputRef?.current?.focus();
               }
             }}
             className="input-box"
           >
-            <input
-              placeholder="type your message"
-              value={prompt}
-              ref={inputRef}
-              onChange={(e) => setPrompt(e.target.value)}
-              type="text"
-              className="prompt"
-              onKeyDown={handleKeyDown}
-              disabled={
-                !currentQuestion.type || currentQuestion.type === "multi-choice"
-              }
-            />
+            {currentQuestion?.type !== "file" ? (
+              <input
+                placeholder="type your message"
+                value={prompt}
+                ref={inputRef}
+                onChange={(e) => setPrompt(e.target.value)}
+                type="text"
+                className="prompt"
+                onKeyDown={handleKeyDown}
+                disabled={
+                  !currentQuestion.type ||
+                  currentQuestion.type !== "text-response"
+                }
+              />
+            ) : (
+              <>
+                <label htmlFor="upload-file" className="file-prompt">
+                  {fileName ? fileName : "Upload Image"}
+                </label>
+                <input
+                  type="file"
+                  id="upload-file"
+                  onChange={handleDoc}
+                  onKeyDown={handleKeyDown}
+                  name="file-input"
+                  accept="image/*"
+                  hidden
+                />
+              </>
+            )}
             <button onClick={moveToNextQuestion} className="send-btn">
               <IoSend className="arrow" />
             </button>
