@@ -57,13 +57,14 @@ const ChatBot = () => {
         setCurrentQuestion(() => {
           let newCurrQues = data.form.questions[0];
           addMessage(newCurrQues.description, true);
+          let count = 1;
           while (newCurrQues.type === "message") {
             newCurrQues = data.form.questions.find(
               (question) => question._id === newCurrQues.nextQuestions[0]
             );
             setTimeout(() => {
               addMessage(newCurrQues.description, true);
-            }, 1000);
+            }, 1000 * count++);
           }
           if (newCurrQues.type !== "multi-choice") {
             setNextQuestionId(newCurrQues.nextQuestions[0]);
@@ -117,6 +118,7 @@ const ChatBot = () => {
     setPrompt("");
     setDoc("");
     setFileName("");
+    setShowOptions(false);
     setQa((prev) => {
       const newQa = { ...prev };
       if (doc)
@@ -126,19 +128,21 @@ const ChatBot = () => {
       else newQa[currentQuestion.description] = prompt;
 
       if (!nextQuestionId) {
-        submitResponse(newQa);
+        submitResponse(newQa,1000);
         return;
       }
       let newCurrQues = formData.questions.find(
         (question) => question._id === nextQuestionId
       );
-      setTimeout(() => {
-        addMessage(newCurrQues.description, true);
-      }, 1000);
-
+      let count=1;
       while (newCurrQues.type === "message") {
+        const messageText = newCurrQues.description;
+
+        setTimeout(() => {
+          addMessage(messageText, true);
+        }, 1000*count++);
         if (!newCurrQues.nextQuestions[0]) {
-          submitResponse(newQa);
+          submitResponse(newQa,1000*(count+1));
           setNextQuestionId("");
           setCurrentQuestion({});
           return;
@@ -147,6 +151,9 @@ const ChatBot = () => {
           (question) => question._id === newCurrQues.nextQuestions[0]
         );
       }
+      setTimeout(() => {
+        addMessage(newCurrQues.description, true);
+      }, 1000);
 
       if (newCurrQues.type !== "multi-choice") {
         setNextQuestionId(newCurrQues.nextQuestions[0]);
@@ -161,7 +168,7 @@ const ChatBot = () => {
     if (currentQuestion.type === "multi-choice")
       setTimeout(() => {
         setShowOptions(true);
-      }, 3000);
+      }, 2000);
     else setShowOptions(false);
   }, [currentQuestion]);
 
@@ -171,7 +178,7 @@ const ChatBot = () => {
     setMessages((prev) => [...prev, { message, isQuestion }]);
   };
 
-  const submitResponse = async (quesAns) => {
+  const submitResponse = async (quesAns,time) => {
     try {
       const { data } = await axios.patch(
         `${import.meta.env.VITE_SERVER}/emily/submit-response`,
@@ -181,7 +188,10 @@ const ChatBot = () => {
         }
       );
       if (data?.success) {
-        toast.success(data?.message);
+        setTimeout(() => {
+          toast.success(data?.message);
+        }, time);
+
       }
     } catch (error) {
       console.log(error);
@@ -199,6 +209,7 @@ const ChatBot = () => {
     <div className="chatbot">
       <ToastContainer />
       <Navbar />
+      {JSON.stringify(qa)}
       <div className="chat-container">
         <div className="bot-intro">
           <Lottie
