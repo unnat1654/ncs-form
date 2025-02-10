@@ -61,10 +61,12 @@ const ChatBot = () => {
             newCurrQues = data.form.questions.find(
               (question) => question._id === newCurrQues.nextQuestions[0]
             );
-            addMessage(newCurrQues.description, true);
-            if (newCurrQues.type !== "multi-choice") {
-              setNextQuestionId(newCurrQues.nextQuestions[0]);
-            }
+            setTimeout(() => {
+              addMessage(newCurrQues.description, true);
+            }, 1000);
+          }
+          if (newCurrQues.type !== "multi-choice") {
+            setNextQuestionId(newCurrQues.nextQuestions[0]);
           }
           return newCurrQues;
         });
