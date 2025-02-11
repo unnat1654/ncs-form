@@ -71,6 +71,10 @@ const ChatBot = () => {
           }
           if (newCurrQues.type !== "multi-choice") {
             setNextQuestionId(newCurrQues.nextQuestions[0]);
+          } else {
+            setTimeout(() => {
+              setShowOptions(true);
+            }, 2000);
           }
           return newCurrQues;
         });
@@ -144,7 +148,7 @@ const ChatBot = () => {
         setTimeout(() => {
           addMessage(messageText, true);
           chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
-        }, 1000*count++);
+        }, 1500*count++);
         if (!newCurrQues.nextQuestions[0]) {
           submitResponse(newQa,1000*(count+1));
           setNextQuestionId("");
@@ -158,10 +162,14 @@ const ChatBot = () => {
       setTimeout(() => {
         addMessage(newCurrQues.description, true);
         chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
-      }, 1000);
+      }, 1500*count++);
 
       if (newCurrQues.type !== "multi-choice") {
         setNextQuestionId(newCurrQues.nextQuestions[0]);
+      } else {
+        setTimeout(() => {
+          setShowOptions(true);
+        }, 1500*count);
       }
 
       setCurrentQuestion(newCurrQues);
@@ -169,13 +177,9 @@ const ChatBot = () => {
     });
   };
 
-  useEffect(() => {
-    if (currentQuestion.type === "multi-choice")
-      setTimeout(() => {
-        setShowOptions(true);
-      }, 2000);
-    else setShowOptions(false);
-  }, [currentQuestion]);
+  // useEffect(() => {
+  //   else setShowOptions(false);
+  // }, [currentQuestion]);
 
   //add messages to chat(both questions and answers) using this function
   const addMessage = (message, isQuestion) => {
