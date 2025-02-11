@@ -209,7 +209,6 @@ const ChatBot = () => {
     <div className="chatbot">
       <ToastContainer />
       <Navbar />
-      {JSON.stringify(qa)}
       <div className="chat-container">
         <div className="bot-intro">
           <Lottie
