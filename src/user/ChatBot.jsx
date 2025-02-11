@@ -46,6 +46,7 @@ const ChatBot = () => {
   const [qa, setQa] = useStateWithCallback({});
   const navigate = useNavigate();
   const location = useLocation();
+  const chatContainerRef = useRef(null);
 
   const fetchForm = async () => {
     try {
@@ -57,6 +58,7 @@ const ChatBot = () => {
         setCurrentQuestion(() => {
           let newCurrQues = data.form.questions[0];
           addMessage(newCurrQues.description, true);
+          chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
           let count = 1;
           while (newCurrQues.type === "message") {
             newCurrQues = data.form.questions.find(
@@ -64,6 +66,7 @@ const ChatBot = () => {
             );
             setTimeout(() => {
               addMessage(newCurrQues.description, true);
+              chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
             }, 1000 * count++);
           }
           if (newCurrQues.type !== "multi-choice") {
@@ -140,6 +143,7 @@ const ChatBot = () => {
 
         setTimeout(() => {
           addMessage(messageText, true);
+          chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
         }, 1000*count++);
         if (!newCurrQues.nextQuestions[0]) {
           submitResponse(newQa,1000*(count+1));
@@ -153,6 +157,7 @@ const ChatBot = () => {
       }
       setTimeout(() => {
         addMessage(newCurrQues.description, true);
+        chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
       }, 1000);
 
       if (newCurrQues.type !== "multi-choice") {
@@ -209,7 +214,7 @@ const ChatBot = () => {
     <div className="chatbot">
       <ToastContainer />
       <Navbar />
-      <div className="chat-container">
+      <div className="chat-container" ref={chatContainerRef}>
         <div className="bot-intro">
           <Lottie
             animationData={robotAnimation}
@@ -217,9 +222,9 @@ const ChatBot = () => {
             style={{ width: "50%", height: "50%" }}
             className="bot-avatar"
           />
-          <h2>{formData.name}</h2>
-          <p>Emily presents to you,</p>
-          <p>{formData.description}</p>
+          <h2 className="bot-intro-name">{formData.name}</h2>
+          <p  className="bot-intro-greeting">Emily presents to you,</p>
+          <p className="bot-intro-description">{formData.description}</p>
         </div>
         <div className="chat-box">
           <div className="display">

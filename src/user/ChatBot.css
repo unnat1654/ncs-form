@@ -255,6 +255,7 @@ h2 {
         margin-top: 5vh;
         height: 100%;
         flex-grow: 1;
+        align-items: center;
     }
 
     .bot-intro {
@@ -318,10 +319,9 @@ h2 {
     /* Center the robot logo on mobile */
     .bot-intro {
         display: block;
-        width: 100%;
+        width: 95%;
         text-align: center;
-        padding: 20px 0;
-
+        padding: 20px 0px;
     }
 
     .bot-avatar {
