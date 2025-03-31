@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import "react-toastify/dist/ReactToastify.css"; //toast
+import "react-toastify/dist/ReactToastify.css";
 import { Routes, Route } from "react-router-dom";
 import FormCreator from "./admin/FormCreator";
 import AllFormList from "./admin/AllFormList";
