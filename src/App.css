@@ -1,12 +1,20 @@
+@import "tailwindcss";
+
+@theme {
+	--color-primary-100: oklch(59.26% 0.101 203.54);
+	--color-primary-200: oklch(60.45% 0.107 183.38);
+	--color-primary-300: oklch(48.83% 0.084 205.88);
+}
+
 @font-face {
-    font-family: 'CustomFont';
-    src: url("./styles/AvenirLTStd35Light.otf") format('opentype');
-    font-weight: normal;
-    font-style: normal;
+	font-family: "CustomFont";
+	src: url("./styles/AvenirLTStd35Light.otf") format("opentype");
+	font-weight: normal;
+	font-style: normal;
 }
 
 body {
-    font-family: 'CustomFont', sans-serif;
-    margin: 0;
-    padding: 0;
+	font-family: "CustomFont", sans-serif;
+	margin: 0;
+	padding: 0;
 }
