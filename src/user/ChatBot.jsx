@@ -38,7 +38,9 @@ const ChatBot = () => {
 	const [currentQuestion, setCurrentQuestion] = useState({});
 	const [showOptions, setShowOptions] = useState(false);
 	const [nextQuestionId, setNextQuestionId] = useState("");
-	const [messages, setMessages] = useState([]);
+	const [messages, setMessages] = useState([
+		{ message: "how was your day. i hope youre doing well", isQuestion: true },
+	]);
 	const [prompt, setPrompt] = useState("");
 	const [doc, setDoc] = useState("");
 	const [fileName, setFileName] = useState("");
@@ -234,7 +236,7 @@ const ChatBot = () => {
 		flex-col"
 				ref={chatContainerRef}
 			>
-				<div className="bot-intro md:w-1/2 w-full md:h-full h-[calc(100vh-4rem)] p-8 bg-[#f9f9f9] flex flex-col items-center justify-center">
+				<div className="bot-intro hidden md:w-1/2 w-full md:h-full h-[calc(100vh-4rem)] p-8 bg-[#f9f9f9] md:flex flex-col items-center justify-center">
 					<Lottie
 						animationData={robotAnimation}
 						loop={true}
@@ -246,11 +248,23 @@ const ChatBot = () => {
 					<p className="bot-intro-description">{formData.description}</p>
 				</div>
 
-				<div className="chat-box md:w-1/2 w-full md:h-full h-screen">
+				<div className="chat-box md:w-1/2 w-full h-[calc(100vh-4rem)]">
 					<div
-						className="display md:h-[calc(100vh-4rem-3rem)] h-[calc(100vh-3rem)] overflow-auto py-4"
+						className="display h-[calc(100vh-4rem-3rem)] overflow-auto py-4"
 						ref={chatContainerRef}
 					>
+						<div className="bot-intro md:hidden md:w-1/2 w-full h-fit p-8 pt-0 bg-transparent flex flex-col items-center justify-center">
+							<Lottie
+								animationData={robotAnimation}
+								loop={true}
+								style={{ width: "50%", height: "50%" }}
+								className="bot-avatar"
+							/>
+							<h2 className="bot-intro-name">{formData.name}</h2>
+							<p className="bot-intro-greeting">Emily presents to you,</p>
+							<p className="bot-intro-description">{formData.description}</p>
+						</div>
+
 						{messages.map(({ message, isQuestion }, index) => (
 							<div
 								key={index}
@@ -266,10 +280,10 @@ const ChatBot = () => {
 									/>
 								)}
 								<div
-									className={`message px-4 py-2 mb-4 break-words rounded-tl-lg rounded-tr-lg text-md text-[#333] bg-[#d1e7dd] max-w-[60%] ${
+									className={`message px-4 py-2 mb-4 break-words rounded-tl-lg rounded-tr-lg text-md text-[#333] max-w-[60%] ${
 										isQuestion
-											? "self-start rounded-br-lg"
-											: "self-end rounded-bl-lg"
+											? "bg-gray-200 self-start rounded-br-lg"
+											: "bg-[#d1e7dd] self-end rounded-bl-lg"
 									}`}
 								>
 									{isQuestion
@@ -323,7 +337,7 @@ const ChatBot = () => {
 					>
 						{currentQuestion?.type !== "file" ? (
 							<input
-								placeholder="type your message"
+								placeholder="Type your message"
 								value={prompt}
 								ref={inputRef}
 								onChange={(e) => setPrompt(e.target.value)}
@@ -354,9 +368,9 @@ const ChatBot = () => {
 						)}
 						<button
 							onClick={moveToNextQuestion}
-							className="send-btn w-[24px] cursor-pointer"
+							className="send-btn cursor-pointer"
 						>
-							<IoSend className="arrow" />
+							<IoSend className="arrow hover:text-primary-100 w-5 h-5" />
 						</button>
 					</div>
 				</div>

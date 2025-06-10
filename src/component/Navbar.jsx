@@ -81,8 +81,8 @@ const Hamburger = ({ menuOpen, setMenuOpen }) => {
 			onClick={() => setMenuOpen((prev) => !prev)}
 		>
 			<div
-				className={`absolute w-full h-1 bg-black rounded transition-all duration-300 ${
-					menuOpen ? "rotate-45" : "-translate-y-2"
+				className={`absolute left-0 h-1 bg-black rounded transition-all duration-300 ${
+					menuOpen ? "rotate-45 w-full" : "-translate-y-2 w-1/2"
 				}`}
 			/>
 			<div
@@ -91,8 +91,8 @@ const Hamburger = ({ menuOpen, setMenuOpen }) => {
 				}`}
 			/>
 			<div
-				className={`absolute w-full h-1 bg-black rounded transition-all duration-300 ${
-					menuOpen ? "-rotate-45" : "translate-y-2"
+				className={`absolute right-0 h-1 bg-black rounded transition-all duration-300 ${
+					menuOpen ? "-rotate-45 w-full" : "translate-y-2 w-1/2"
 				}`}
 			/>
 		</div>

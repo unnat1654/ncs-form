@@ -1,9 +1,9 @@
 @import "tailwindcss";
 
 @theme {
-	--color-primary-100: oklch(59.26% 0.101 203.54);
-	--color-primary-200: oklch(60.45% 0.107 183.38);
-	--color-primary-300: oklch(48.83% 0.084 205.88);
+	--color-primary-100: oklch(54.98% 0.095 210.08);
+	--color-primary-200: oklch(50.59% 0.087 209.67);
+	--color-primary-300: oklch(45.5% 0.078 210.57);
 }
 
 @font-face {
