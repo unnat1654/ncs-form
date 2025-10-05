@@ -78,13 +78,16 @@ const FormCreator = () => {
   return (
     <>
       <ToastContainer />
-      <div className="container">
+      <div className="bg-white, font-sans, min-h-screen, p-6 or p-10">
 
         {/* Form Header */}
-        <h1>Form Manager</h1>
-
+        <h1 className="text-2xl, font-bold, text-gray-800, text-center">Form Manager</h1>
+         <br>
+         </br>
+          <br>
+         </br>
         {/* Form Name and Description Fields */}
-        <div className="form-fields">
+        <div className="mb-8 p-6 bg-gray-50 rounded-xl shadow-md border border-gray-100">
           <input
             className="Id"
             type="text"
@@ -92,6 +95,14 @@ const FormCreator = () => {
             value={formName}
             onChange={(e) => setFormName(e.target.value)}
           />
+           <input
+            className="desc"
+            type="text"
+            placeholder="Enter event id"
+            value={event_id}
+            onChange={(e) => setEvent_id(e.target.value)}
+          />
+          <br></br>
           <input
             className="desc"
             type="text"
@@ -99,18 +110,12 @@ const FormCreator = () => {
             value={formDescription}
             onChange={(e) => setFormDescription(e.target.value)}
           />
-          <input
-            className="desc"
-            type="text"
-            placeholder="Enter event id"
-            value={event_id}
-            onChange={(e) => setEvent_id(e.target.value)}
-          />
+         
         </div>
 
         {/* Questions List */}
         {questions.map((question, index) => (
-          <div className="question-container" key={index}>
+          <div className="flex justify-between items-start mb-8 p-6 bg-gray-50 rounded-xl shadow-md border border-gray-100" key={index}>
             <Question
               index={index}
               question={question}
@@ -122,10 +127,10 @@ const FormCreator = () => {
 
         {/* Form Actions */}
         <div className="form-actions">
-          <button className="add-question-btn" onClick={addQuestion}>
+          <button className="bg-cyan-600 hover:bg-cyan-700 text-white font-medium py-2 px-4 rounded-lg shadow-md transition duration-150 ease-in-out" onClick={addQuestion}>
             Add Question
           </button>
-          <button className="save-form-btn" onClick={saveForm}>
+          <button className="bg-cyan-600 hover:bg-cyan-700 text-white font-medium py-2 px-4 rounded-lg shadow-md transition duration-150 ease-in-out" onClick={saveForm}>
             Save Form
           </button>
         </div>
