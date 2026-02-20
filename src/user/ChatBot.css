@@ -60,7 +60,7 @@ h2 {
 .chat-box {
     width: 55%;
     padding-block: 20px;
-    margin-right: calc(1vw+20px);
+    margin-right: calc(1vw + 20px);
     display: flex;
     flex-direction: column;
     justify-content: space-between;
